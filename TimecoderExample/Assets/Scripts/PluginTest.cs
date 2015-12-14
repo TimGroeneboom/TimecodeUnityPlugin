@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 public class PluginTest : MonoBehaviour
 {
-    [DllImport("ASimplePlugin")]
+    [DllImport("Timecoder")]
     private static extern string PrintHello();
 
     void Start()
