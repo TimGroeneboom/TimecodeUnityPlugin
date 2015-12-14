@@ -22,7 +22,7 @@
     <ProjectGuid>{F7CFEF5A-54BD-42E8-A59E-54ABAEB4EA9C}</ProjectGuid>
     <RootNamespace>AudioPluginDemo</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <ProjectName>TimecodePlugin</ProjectName>
+    <ProjectName>AudioPluginTimecode</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -78,6 +78,13 @@
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <SourcePath>C:\Projecten\TimecodeUnityPlugin\Plugin\xwax;$(VC_SourcePath)</SourcePath>
+    <IncludePath>C:\Projecten\TimecodeUnityPlugin\Plugin\xwax;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
@@ -89,6 +96,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <AdditionalIncludeDirectories>C:\Projecten\TimecodeUnityPlugin\Plugin\xwax;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -97,9 +105,8 @@
       <AdditionalDependencies>kernel32.lib;user32.lib;winmm.lib</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir ..\..\Assets\Plugins\x86
-copy $(TargetPath) ..\..\Assets\Plugins\x86\$(TargetName).dll
-</Command>
+      <Command>mkdir ..\..\TimecoderExample\Assets\Plugins\x86 
+copy /y $(TargetPath) ..\..\TimecoderExample\Assets\Plugins\x86\$(TargetName).dll</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -114,6 +121,9 @@ copy $(TargetPath) ..\..\Assets\Plugins\x86\$(TargetName).dll
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>false</ExceptionHandling>
       <BufferSecurityCheck>false</BufferSecurityCheck>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+      <CompileAs>Default</CompileAs>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -121,9 +131,8 @@ copy $(TargetPath) ..\..\Assets\Plugins\x86\$(TargetName).dll
       <AdditionalDependencies>kernel32.lib;user32.lib;winmm.lib</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir ..\..\Assets\Plugins\x86_64
-copy /y $(TargetPath) ..\..\Assets\Plugins\x86_64\$(TargetName).dll
-</Command>
+      <Command>mkdir ..\..\TimecoderExample\Assets\Plugins\x86_64 
+copy /y $(TargetPath) ..\..\TimecoderExample\Assets\Plugins\x86_64\$(TargetName).dll</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -151,8 +160,8 @@ copy /y $(TargetPath) ..\..\Assets\Plugins\x86_64\$(TargetName).dll
       <AdditionalDependencies>kernel32.lib;user32.lib;winmm.lib</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir ..\..\Assets\Plugins\x86
-copy $(TargetPath) ..\..\Assets\Plugins\x86\$(TargetName).dll
+      <Command>mkdir ..\..\TimecoderExample\Assets\Plugins\x86 
+copy /y $(TargetPath) ..\..\TimecoderExample\Assets\Plugins\x86\$(TargetName).dll
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -182,9 +191,8 @@ copy $(TargetPath) ..\..\Assets\Plugins\x86\$(TargetName).dll
       <AdditionalDependencies>kernel32.lib;user32.lib;winmm.lib</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir ..\..\Assets\Plugins\x86_64
-copy /y $(TargetPath) ..\..\Assets\Plugins\x86_64\$(TargetName).dll
-</Command>
+      <Command>mkdir ..\..\TimecoderExample\Assets\Plugins\x86_64
+copy /y $(TargetPath) ..\..\TimecoderExample\Assets\Plugins\x86_64\$(TargetName).dll</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

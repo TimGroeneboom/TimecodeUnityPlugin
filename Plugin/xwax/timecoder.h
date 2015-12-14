@@ -24,6 +24,10 @@
 #include <stdbool.h>
 #endif
 
+#ifdef _MSC_VER
+#define inline __inline
+#endif
+
 /* #include "device.h" */
 #include "lut.h"
 #include "pitch.h"
@@ -92,7 +96,7 @@ struct timecoder_t {
 void timecoder_free_lookup(void);
 
 int timecoder_init(struct timecoder_t *tc, const char *def_name, double speed,
-                   unsigned int sample_rate);
+	unsigned int sample_rate);
 void timecoder_clear(struct timecoder_t *tc);
 
 int timecoder_monitor_init(struct timecoder_t *tc, int size);
