@@ -1,4 +1,5 @@
 #include "AudioPluginUtil.h"
+#include <iostream>
 
 extern "C"
 {
@@ -19,17 +20,16 @@ namespace Timecode
 		HistoryBuffer history[8];
 		float pitch;
 		int numchannels;
-	};
 
-	//
-	bool shortBufferInited;
-	struct timecoder_t timecoder;
-	short *shortBuffer;
+		struct timecoder_t timecoder;
+		short *shortBuffer = NULL;
+		bool inited = false;
+	};
 
 	int InternalRegisterEffectDefinition(UnityAudioEffectDefinition& definition)
 	{
 		int numparams = P_NUM;
-		definition.paramdefs = new UnityAudioParameterDefinition[numparams];
+
 		return numparams;
 	}
 
@@ -43,7 +43,7 @@ namespace Timecode
 			data->history[i].Init(state->samplerate * 2);
 
 		// TODO : make format selectable with GUI
-		timecoder_init(&timecoder, "traktor_b", 1.0, state->samplerate);
+		timecoder_init(&data->timecoder, "serato_cd", 1.0, state->samplerate);
 
 		return UNITY_AUDIODSP_OK;
 	}
@@ -51,14 +51,11 @@ namespace Timecode
 	UNITY_AUDIODSP_RESULT UNITY_AUDIODSP_CALLBACK ReleaseCallback(UnityAudioEffectState* state)
 	{
 		EffectData* data = state->GetEffectData<EffectData>();
+
+		timecoder_clear(&data->timecoder); // class
+
+		delete data->shortBuffer;
 		delete data;
-
-		//
-		timecoder_clear(&timecoder); // class
-		timecoder_free_lookup(); // static
-
-		//
-		delete shortBuffer;
 
 		return UNITY_AUDIODSP_OK;
 	}
@@ -70,22 +67,25 @@ namespace Timecode
 		memcpy(outbuffer, inbuffer, sizeof(float) * length * inchannels);
 
 		// TODO : find out if this is the best way.
-		if (!shortBufferInited)
+		if (data->shortBuffer == NULL)
 		{
-			shortBuffer = new short[length * inchannels];
-			shortBufferInited = true;
+			data->shortBuffer = new short[length * inchannels];
 		}
 
 		// convert from -1 to 1 to a 16-byte signed short integer
 		int bufferSize = length * inchannels;
 		for (int i = 0; i < bufferSize; i++)
 		{
-			shortBuffer[i] = inbuffer[i] * (1 << 15);
+			data->shortBuffer[i] = inbuffer[i] * (1 << 15);
 		}
 
 		//
-		timecoder_submit(&timecoder, &shortBuffer[0], bufferSize);
-		data->pitch = timecoder_get_pitch(&timecoder);
+		timecoder_submit(&data->timecoder, &data->shortBuffer[0], bufferSize);
+
+		float when;
+		float curPosition = timecoder_get_position(&data->timecoder, &when);
+
+		data->pitch = timecoder_get_pitch(&data->timecoder);
 
 		return UNITY_AUDIODSP_OK;
 	}
