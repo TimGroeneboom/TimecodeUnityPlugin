@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 
 public class PluginTest : MonoBehaviour
 {
-    [DllImport("Timecoder")]
-    private static extern string PrintHello();
+    [DllImport("AudioPluginTimecode")]
+    private static extern float GetPitch();
 
-    void Start()
+    void Update()
     {
-        PrintHello();
+        Debug.Log(GetPitch());
     }
 }

@@ -26,6 +26,8 @@ namespace Timecode
 		bool inited = false;
 	};
 
+	static float Pitch = 0.0f;
+
 	int InternalRegisterEffectDefinition(UnityAudioEffectDefinition& definition)
 	{
 		int numparams = P_NUM;
@@ -85,7 +87,7 @@ namespace Timecode
 		float when;
 		float curPosition = timecoder_get_position(&data->timecoder, &when);
 
-		data->pitch = timecoder_get_pitch(&data->timecoder);
+		Timecode::Pitch = timecoder_get_pitch(&data->timecoder);
 
 		return UNITY_AUDIODSP_OK;
 	}
@@ -128,4 +130,9 @@ namespace Timecode
 		}
 		return UNITY_AUDIODSP_OK;
 	}
+}
+
+extern "C" UNITY_AUDIODSP_EXPORT_API float GetPitch()
+{
+	return Timecode::Pitch;
 }
