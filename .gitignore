@@ -1,0 +1,11 @@
+/Plugin/VisualStudio/.vs/TimecodePlugin/v14/*.suo
+/Plugin/VisualStudio/*.sdf
+/Plugin/VisualStudio/build
+/TimecoderExample/Library
+/TimecoderExample/Assets/Plugins/AudioPluginTimecode.dll
+/TimecoderExample/Assets/Plugins/AudioPluginTimecode.dll.meta
+/Plugin/VisualStudio/.vs/AudioPluginTimecode/v14/*.suo
+/Plugin/VisualStudio/*.user
+/TimecoderExample/.vs/TimecoderExample/v14/*.suo
+/TimecoderExample/*.csproj
+/Plugin/VisualStudio/*.opensdf
